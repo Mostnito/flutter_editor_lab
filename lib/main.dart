@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_editor_lab/provider/item_provider.dart';
+import 'package:flutter_editor_lab/providers/item_provider.dart';
 import 'package:flutter_editor_lab/screens/edit_item_screen.dart';
 import 'package:flutter_editor_lab/screens/item_list_screen.dart';
 import 'package:provider/provider.dart';
