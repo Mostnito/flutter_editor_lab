@@ -1,34 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_editor_lab/models/item.dart';
-
+import 'package:flutter_editor_lab/provider/item_provider.dart';
+import 'package:flutter_editor_lab/screens/edit_item_screen.dart';
+import 'package:provider/provider.dart';
 
 class ItemListScreen extends StatelessWidget {
   final String routeName = '/';
- 
+
   const ItemListScreen({super.key});
- 
+
   @override
   Widget build(BuildContext context) {
-    List<Item> items = [
-      // ตัวอย่างข้อมูล
-      Item(id: '1', name: 'item 1', description: 'Item 1 description'),
-      Item(id: '2', name: 'item 2', description: 'Item 2 description'),
-      Item(id: '3', name: 'item 3', description: 'Item 3 description'),
-    ]; // ดึงข้อมูลรายการสินค้าจาก Provider
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Item List'),
-      ),
-      body: ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          final item = items[index];
-          return ListTile(
-            title: Text(item.name),
-            subtitle: Text(item.description),
-            onTap: () {
-              // นำทางไปยังหน้ารายละเอียดสินค้า
-              // Navigator.push(context, MaterialPageRoute(builder: (context) => ItemDetailScreen(itemId: item.id)));
+      appBar: AppBar(title: const Text('รายการสินค้า')),
+      body: Consumer<ItemProvider>(
+        builder: (context, itemProvider, child) {
+          return ListView.builder(
+            itemCount: itemProvider.items.length,
+            itemBuilder: (context, index) {
+              final item = itemProvider.items[index];
+              return ListTile(
+                title: Text(item.name),
+                subtitle: Text(item.description),
+                trailing: const Icon(Icons.edit),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    EditItemScreen.routeName,
+                    arguments: item, // ส่งอ็อบเจกต์ Item ทั้งหมดไปกับ route
+                  );
+                },
+              );
             },
           );
         },
